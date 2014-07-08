@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/mini_background"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/songimageview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/default_mini_album" />
+
+    <RelativeLayout
+        android:layout_width="170dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp" >
+
+        
+         <TextView
+            android:id="@+id/mini_songtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mini_songtitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+            android:text="songTitle"
+            android:textColor="#FFFFFFFF"/>
+                
+        <TextView
+            android:id="@+id/mini_songartist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="artist"
+            android:textColor="#FFFFFFFF" 
+            android:layout_below="@id/mini_songtitle"/>
+
+
+
+    </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/btn_miniPlay"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+				android:layout_gravity="center"
+                android:background="@drawable/mini_btnplay" />
+
+        <ImageButton
+            android:id="@+id/btn_miniNext"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/mini_btnnext" />
+
+</LinearLayout>

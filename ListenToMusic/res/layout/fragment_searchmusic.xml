@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" xmlns:android1="http://schemas.android.com/apk/res/android">
+
+
+
+        　　<!-- label为搜索框上方的文本，hint搜索框里面的提示文本，显示label -->
+        　　<!-- 语音搜索配置 -->
+            <!-- 配置搜索建议，配置错误将不会显示，这里的searchSuggestAuthority的值必须是
+    继承自SearchRecentSuggestionsProvider的完整路径名 -->
+
+<!--       <searchable
+          android:layout_width="match_parent"
+          android1:layout_height="wrap_content"
+          android:hint="@string/search_hint"
+          android:label="@string/search_label"
+          android:searchMode="showSearchLabelAsBadge"
+          android:searchSuggestAuthority="com.android.cbin.SearchSuggestionSampleProvider"
+          android:searchSuggestSelection=" ? "
+          android:voiceLanguageModel="free_form"
+          android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" /> -->
+          
+          <LinearLayout
+              android:id="@+id/searchMusicLayout"
+              android1:layout_width="match_parent"
+              android1:layout_height="wrap_content"
+              android1:background="@drawable/search_item_bg"
+              android1:gravity="center_horizontal" >
+
+               <SearchView
+                   android1:id="@+id/searchMusic"
+                   android1:layout_width="wrap_content"
+                   android1:layout_height="50dp"
+                   android1:layout_gravity="clip_vertical|clip_horizontal"
+                   android1:layout_marginTop="2dp"
+                   android1:background="@drawable/download_btn_normal"
+                   android1:iconifiedByDefault="false"
+                   android1:imeOptions="actionDone"
+                   android1:queryHint="@string/abc_searchview_description_search" >
+
+    </SearchView>
+              </LinearLayout>
+             
+        
+
+
+
+
+
+
+        <ListView
+            android1:id="@+id/lvSearchMusicResult"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_alignParentBottom="true"
+            android1:layout_alignParentRight="true" 
+             android:layout_below="@id/searchMusicLayout">
+        </ListView>
+
+
+
+</RelativeLayout>
