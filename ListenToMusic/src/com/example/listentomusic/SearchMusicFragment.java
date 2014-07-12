@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.example.listentomusic.R.id;
+import com.example.listentomusic.common.MusicControl;
 
 
 
@@ -90,7 +91,12 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
 		// TODO Auto-generated method stub
-		Log.i("onQueryTextSubmit",arg0);
+//		Log.i("onQueryTextSubmit",arg0);
+		if (arg0.length()==0) {
+			return true;
+		}
+		MusicControl.getInstance().searchMusic(getActivity(),arg0);
+		
 		searchView.clearFocus();
 		
 		return true;

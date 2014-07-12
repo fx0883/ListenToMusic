@@ -44,6 +44,8 @@ public class MainActivity extends FragmentActivity implements SelectedChangeDele
 			
 			getSupportFragmentManager().beginTransaction()
 			.add(R.id.mainBottom, new MiniPlayBottom()).commit();
+			
+
 		}
 	}
 
