@@ -1,7 +1,11 @@
 package com.example.listentomusic.module;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.logging.Log;
 
+import android.R.bool;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
@@ -35,7 +39,7 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 //		private final String TAG_REQUEST = "MY_TAG";
 //		RequestQueue mVolleyQueue = Volley.newRequestQueue(getApplicationContext());
 //		RequestQueue mVolleyQueue = Volley.newRequestQueue(ListenToMusicApp.getListenToMusicApp()); 
-		mVolleyQueue = Volley.newRequestQueue(ListenToMusicApp.getListenToMusicApp()); 
+		mVolleyQueue = Volley.newRequestQueue(context); 
 		//String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1",strKeyword);
 		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1","wangfei");
 		StringRequestEx stringRequest = new StringRequestEx(Request.Method.GET, url, new Response.Listener<String>() {
@@ -43,6 +47,7 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 			public void onResponse(String response) 
 			{
 				System.out.print(response);
+				formatSOSOReceivedData(response);
 			}
 		}, new Response.ErrorListener() {
 			@Override
@@ -81,10 +86,40 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 		//parsing response headers.
 		
 		stringRequest.setShouldCache(true);
-		stringRequest.setTag("MYTAG");	
+//		stringRequest.setTag("MYTAG");	
 		mVolleyQueue.add(stringRequest);
 	}
+	private String formatSOSOReceivedData(String aimString)  {
+	  
+//	    if ([aimString hasPrefix:@"searchJsonCallback("] && [receiveString hasSuffix:@")"]) {
+//	        NSString *resultString = [[receiveString substringToIndex:receiveString.length-1] substringFromIndex:19];
+//	        return resultString;
+//	    } else {
+//	        NSLog(@"搜索歌曲时，解析出的数据出现问题");
+//	        return nil;
+//	    }
+		
 
+		Pattern pattern = Pattern.compile("^searchJsonCallback\\(.*\\)$",Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(aimString);
+		System.out.println(matcher.matches());
+		boolean bisMatch=matcher.matches();
+		if (bisMatch) {
+
+			Pattern pattern2 = Pattern.compile("^searchJsonCallback\\(", Pattern.DOTALL);
+			Matcher matcher2 = pattern.matcher(aimString);
+			String string = matcher2.replaceAll("1111");
+			System.out.println(string);
+			return string;
+		}
+		
+		
+		
+		
+		
+		
+	    return aimString;
+	}
 	
 //	private void makeSampleHttpRequest() {
 //		
