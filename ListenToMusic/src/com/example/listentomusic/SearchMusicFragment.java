@@ -6,9 +6,14 @@ import java.util.logging.Logger;
 
 import com.example.listentomusic.R.id;
 import com.example.listentomusic.common.MusicControl;
+import com.example.listentomusic.util.CommonConst;
 
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 //import android.support.v7.widget.SearchView;
@@ -20,6 +25,7 @@ import android.os.Bundle;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 //import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +49,23 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 	private List<String> data ;
 	private ArrayAdapter<String> adapter;
 	private SearchView searchView;
+	private LocalBroadcastManager mBroadcastManager;
+	private IntentFilter intentFilter;
+	private BroadcastReceiver receiver =new BroadcastReceiver() {
+		
+		 
+		
+		@Override
+		
+		public void onReceive(Context context, Intent intent) {
+	
+//		int num = intent.getIntExtra("name", 0);//获得后台传过来的，键值为name对应的值
+
+//		tv.setText(num+"");//更新主界面UI
+			Log.i("1111","onReceive=================>");
+		}
+
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,10 +75,18 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 		
 		
 		
-		
+		initData();
 		initView(rootView);
 		
+		
 		return rootView;
+	}
+	
+	private void initData()
+	{
+		mBroadcastManager = LocalBroadcastManager.getInstance(this.getActivity());
+		   intentFilter = new IntentFilter();
+	        intentFilter.addAction(CommonConst.ACTION_SEARCHMUSIC);
 	}
 	
 	private void initView(View v)
@@ -81,7 +112,21 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 		searchView.setOnQueryTextListener(this);
 //		searchView.setSubmitButtonEnabled(true);
 	}
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		mBroadcastManager.registerReceiver(receiver, intentFilter);
+	}
 
+	@Override
+	public void onStop()
+	{
+		super.onStop();
+		mBroadcastManager.unregisterReceiver(receiver);//取消动态注册
+	}
+	
 	@Override
 	public boolean onQueryTextChange(String arg0) {
 		Log.i("onQueryTextChange",arg0);

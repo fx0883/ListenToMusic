@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import android.R.bool;
 import android.R.integer;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
 //import com.android.volley.ClientError;
@@ -30,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.listentomusic.ListenToMusicApp;
 import com.example.listentomusic.model.FSMusicInfo;
 import com.example.listentomusic.model.MusicModelManager;
+import com.example.listentomusic.util.CommonConst;
 import com.example.listentomusic.util.StringRequestEx;
 
 public class SoSoSearchMusicClient extends BaseSearchClient {
@@ -176,60 +179,11 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
             musicmodelmanager.addMusicInfo(musicInfo);
         }  
 
-//	    
-//	    for (int i=0; i<[searhArray count]; i++)
-//	    {
-//	        NSDictionary *record = searhArray[i];
-//	        NSString *f = [record valueForKey:@"f"];
-//	        FSMusicInfo *musicMessage = [[FSMusicInfo alloc] init];
-//	        NSArray *arr = [f componentsSeparatedByString:@"|"];
-//	        if (arr.count > 10) {
-//	            musicMessage.songId = [arr objectAtIndex:0];
-//	            musicMessage.title = [arr objectAtIndex:1];
-//	            musicMessage.artist = [arr objectAtIndex:3];
-//	            musicMessage.albumId = [arr objectAtIndex:4];
-//	            musicMessage.album = [arr objectAtIndex:5];
-//	            
-//	            NSString *durationStr =[arr objectAtIndex:7];
-//	            NSInteger intDuration = [durationStr integerValue];
-//	            musicMessage.duration = [NSString stringWithFormat:@"%02d:%02d", intDuration/60, intDuration%60];
-//	            
-//	            musicMessage.location = [arr objectAtIndex:8];
-//	            // set url string
-//	            NSInteger albumIdInt = [musicMessage.albumId integerValue];
-//	            // 歌曲图片url
-//	            NSString *albumPicUrlString = [NSString stringWithFormat:@"http://imgcache.qq.com/music/photo/album/%d/albumpic_%d_0.jpg",albumIdInt%100, albumIdInt];
-//	            musicMessage.albumPictureUrlString = albumPicUrlString;
-//	            
-//	            //    NSString *localId = musicInfo.location;
-//	            //    NSString *songId = musicInfo.songId;
-//	            int intlocation=[musicMessage.location intValue];
-//	            NSString *sourceUrlStr=nil;
-//	            if (intlocation>=10) {
-//	                sourceUrlStr = [NSString stringWithFormat:@"http://stream%@.qqmusic.qq.com/3%07d.mp3",musicMessage.location, [musicMessage.songId integerValue]];
-//	            }
-//	            else
-//	            {
-//	                sourceUrlStr = [NSString stringWithFormat:@"http://stream1%@.qqmusic.qq.com/3%07d.mp3",musicMessage.location, [musicMessage.songId integerValue]];
-//	            }
-//	      
-//
-//	            
-//	            musicMessage.sourceUrlStr = sourceUrlStr;
-//	        }
-//	        
-////	        if (musicMessage.sourceUrlStr==nil) {
-//	//
-////	        }
-//	        if (musicMessage.sourceUrlStr==nil) {
-//	            continue;
-//	        }
-//	        assert(musicMessage.sourceUrlStr);
-////	        [musicinfomanager.searchMusicArray insertObject:musicMessage atIndex:0];
-//	        [musicinfomanager.searchMusicArray addObject:musicMessage];
-//	    }
+        //发送广播消息
 	    
-
+        Intent intent = new Intent(CommonConst.ACTION_SEARCHMUSIC);
+//        intent.putExtra("position", position);
+        LocalBroadcastManager.getInstance(ListenToMusicApp.getListenToMusicApp()).sendBroadcast(intent);
 		
 	}
 	private JSONObject formatSOSOReceivedData(String aimString)  {		

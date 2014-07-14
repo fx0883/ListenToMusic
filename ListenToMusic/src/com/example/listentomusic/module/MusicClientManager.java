@@ -71,7 +71,8 @@ public class MusicClientManager {
     public void searchMusic(Context context, String keywordString) {
 		
     	MusicModelManager  musicmodelmanager = MusicModelManager.getInstance();
-    	musicmodelmanager.setMusicKeyString(keywordString);    	
+    	musicmodelmanager.setMusicKeyString(keywordString);  
+    	musicmodelmanager.clearMusic();
     	Iterator<Entry<String, BaseSearchClient>> iter = mMusicClientMap.entrySet().iterator();
 
     	while (iter.hasNext()) {
