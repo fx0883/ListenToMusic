@@ -30,7 +30,27 @@ public class MusicModelManager  {
 	public void setMusicKeyString(String musicKeyString) {
 		this.musicKeyString = musicKeyString;
 	}
-	
-	public List<FSMusicInfo> mSearchFsMusicInfos = new ArrayList<FSMusicInfo>();
+	private List<FSMusicInfo> mSearchFsMusicInfos = new ArrayList<FSMusicInfo>();
+	public List<FSMusicInfo> getSearchFsMusicInfos() {
+		return mSearchFsMusicInfos;
+	}
+	public void setSearchFsMusicInfos(List<FSMusicInfo> searchFsMusicInfos) {
+		mSearchFsMusicInfos = searchFsMusicInfos;
+	}
+
+
+	public void clearMusic() {
+		mSearchFsMusicInfos.clear();
+	}
+
+	public void addMusicInfo(FSMusicInfo fsmusicinfo) {
+		if(!mSearchFsMusicInfos.contains(fsmusicinfo))
+		{
+			mSearchFsMusicInfos.add(fsmusicinfo);
+		}
+	}
+
+
+
 	
 }
