@@ -51,7 +51,7 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 //		RequestQueue mVolleyQueue = Volley.newRequestQueue(ListenToMusicApp.getListenToMusicApp()); 
 		mVolleyQueue = Volley.newRequestQueue(context); 
 		//String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1",strKeyword);
-		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1","wangfei");
+		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=100&t=y1&p=1&utf8=1","wangfei");
 		StringRequestEx stringRequest = new StringRequestEx(Request.Method.GET, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) 

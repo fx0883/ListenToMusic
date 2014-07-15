@@ -14,4 +14,7 @@
     <!-- The hint text that appears in the search box. -->
     <string name="search_hint">Search Music</string>
     
+    <string name="songTitle">songTitle</string>
+    <string name="songArtist">songArtist</string>
+    
 </resources>
