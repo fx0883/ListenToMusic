@@ -1,10 +1,15 @@
 package com.example.listentomusic.module;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +18,7 @@ import android.R.bool;
 import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
@@ -43,7 +49,30 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 
 
 		mVolleyQueue = Volley.newRequestQueue(context); 
-		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=100&t=y1&p=1&utf8=1",strKeyword);
+		
+		
+//		  List<NameValuePair> qparams = newArrayList<NameValuePair>();
+//		    qparams.add(new BasicNameValuePair("xh","xxxxx"));
+//		    qparams.add(new BasicNameValuePair("xm","ÀÔŒÚø’"));
+//		    qparams.add(new BasicNameValuePair("NO","xxxxxxx"));
+//		    URI uri = URIUtils.createURI("http","jwxt.xxxx.edu.cn", -1, "/xxxxx.asp"",
+//		    URLEncodedUtils.format(qparams, "UTF-8"),null); //µΩ’‚øÈ…Ë÷√±‡¬Î
+//		    HttpGet httpget = new HttpGet(uri);
+		
+		String strKeyword2=strKeyword;
+		
+		
+		try {
+			//url = URLEncoder.encode(url,"UTF-8");
+			strKeyword2 = URLEncoder.encode(strKeyword,"UTF-8");
+//			url=URLDecoder.decode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=100&t=y1&p=1&utf8=1",strKeyword2);
+
 		StringRequestEx stringRequest = new StringRequestEx(Request.Method.GET, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) 

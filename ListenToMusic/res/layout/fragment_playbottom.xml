@@ -44,11 +44,12 @@
 
     </RelativeLayout>
 
-            <ImageButton
+        <ImageButton
                 android:id="@+id/btn_miniPlay"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
 				android:layout_gravity="center"
+				android:layout_marginLeft="10dp"
                 android:background="@drawable/mini_btnplay" />
 
         <ImageButton

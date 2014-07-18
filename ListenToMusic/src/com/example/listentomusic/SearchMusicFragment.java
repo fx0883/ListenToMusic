@@ -163,6 +163,7 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
             playlist.addTracks(MusicModelManager.getInstance().getSearchFsMusicInfos());
             
             ListenToMusicApp.getInstance().getPlayerEngineInterface().openPlaylist(playlist);
+            playlist.setSelectedIndex(position);
             ListenToMusicApp.getInstance().getPlayerEngineInterface().play();
             
             

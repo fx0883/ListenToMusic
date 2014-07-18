@@ -15,6 +15,7 @@ public class StringRequestEx extends StringRequest {
 
 	public StringRequestEx(int method, String url, Listener<String> listener,
 			ErrorListener errorListener) {
+
 		super(method, url, listener, errorListener);
 		// TODO Auto-generated constructor stub
 	}
