@@ -40,150 +40,116 @@ public class SoSoSearchMusicClient extends BaseSearchClient {
 	@Override
 	public void searchMusic(Context context, final String strKeyword) 
 	{
-		// TODO Auto-generated method stub
-	//	"http://soso.music.qq.com"
-		
-		//"/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%@&num=30&t=y1&p=1&utf8=1
 
 
-//		private final String TAG_REQUEST = "MY_TAG";
-//		RequestQueue mVolleyQueue = Volley.newRequestQueue(getApplicationContext());
-//		RequestQueue mVolleyQueue = Volley.newRequestQueue(ListenToMusicApp.getListenToMusicApp()); 
-		mVolleyQueue = Volley.newRequestQueue(context); 
-		//String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1",strKeyword);
-		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=100&t=y1&p=1&utf8=1","wangfei");
-		StringRequestEx stringRequest = new StringRequestEx(Request.Method.GET, url, new Response.Listener<String>() {
-			@Override
-			public void onResponse(String response) 
-			{
-				System.out.print(response);
-				JSONObject dataJsonObject= formatSOSOReceivedData(response);
-				//fillModel(strKeyword,dataJsonObject);
-				try {
-					fillModel(strKeyword, dataJsonObject);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				}
-		}, new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				// Handle your error types accordingly.For Timeout & No connection error, you can show 'retry' button.
-				// For AuthFailure, you can re login with user credentials.
-				// For ClientError, 400 & 401, Errors happening on client side when sending api request.
-				// In this case you can check how client is forming the api and debug accordingly.
-				// For ServerError 5xx, you can do retry or handle accordingly.
-				if( error instanceof NetworkError) {
-					android.util.Log.w("1111", "222222");
-				} 
-//				else if( error instanceof ClientError) 
-//				{ 
-//				} 
-				
-				else if( error instanceof ServerError) {
-				} else if( error instanceof AuthFailureError) {
-				} else if( error instanceof ParseError) {
-				} else if( error instanceof NoConnectionError) {
-				} else if( error instanceof TimeoutError) {
-				}
-
-//				stopProgress();
-//				showToast(error.getMessage());
-			}
-		});
-
-		//To EXPERIMENT. Enable response caching to quickly fetch the response from cache, if set true.
-		//Volley decides whether to cache the response or not, based on response headers obtained. Some of the parameters
-		//to look for are Cache-control,maxAge, Expires.
-		//
-		//In case of weather api, the response headers has "Cache-Control: no-cache, must-revalidate" In this case, even if 
-		//setShouldCache() api is set true, Volley decides not to store the response, because server has sent response headers as "must-revalidate"
-		//So storing response doesn't make sense in this api. Some of these intelligences are implemented already in Volley, you need not take the burden of
-		//parsing response headers.
-		
-		stringRequest.setShouldCache(true);
-//		stringRequest.setTag("MYTAG");	
-		mVolleyQueue.add(stringRequest);
-	}
-	protected void fillModel(String keyString,JSONObject dataJsonObject) throws JSONException 
-	{
-		
-		MusicModelManager musicmodelmanager=MusicModelManager.getInstance();
-		if (!keyString.equals(musicmodelmanager.getMusicKeyString())) 
-		{
-			return;
-		}
-//	    FSMusicInfoManager *musicinfomanager=[FSMusicInfoManager sharedMusicInfoManager];
-//	    if (![strkey isEqualToString:musicinfomanager.searchkey]) {
-//	        return;
-//	    }
-//	    
-		JSONArray songlist= dataJsonObject.getJSONArray("list");//获取JSONArray 
-		
-        int length = songlist.length();  
-
-        for(int i = 0; i < length; i++){//遍历JSONArray  
-//            Log.d("debugTest",Integer.toString(i));  
-            JSONObject oj = songlist.getJSONObject(i);  
-            String fString=oj.getString("f");
-            FSMusicInfo musicInfo = new FSMusicInfo();
-            String[] arr=fString.split("\\|");
-            if( arr.length>10) 
-            {
-				musicInfo.songId=arr[0];
-				musicInfo.title=arr[1];
-				musicInfo.artist=arr[3];
-				musicInfo.albumId=arr[4];
-				musicInfo.album=arr[5];
-				
-				String durationString= arr[7];
-				int intDuration=Integer.parseInt(durationString);
-				musicInfo.duration=String.format("%02d:%02d",intDuration/60, intDuration%60);
-				
-				musicInfo.location=arr[8];
-				int albumIdInt = Integer.parseInt(musicInfo.albumId);
-				
-				musicInfo.albumPictureUrlString=String.format("http://imgcache.qq.com/music/photo/album/%d/albumpic_%d_0.jpg",albumIdInt%100, albumIdInt);
-				
-//	            int intlocation=[musicMessage.location intValue];
-//	            NSString *sourceUrlStr=nil;
-//	            if (intlocation>=10) {
-//	                sourceUrlStr = [NSString stringWithFormat:@"http://stream%@.qqmusic.qq.com/3%07d.mp3",musicMessage.location, [musicMessage.songId integerValue]];
-//	            }
-//	            else
-//	            {
-//	                sourceUrlStr = [NSString stringWithFormat:@"http://stream1%@.qqmusic.qq.com/3%07d.mp3",musicMessage.location, [musicMessage.songId integerValue]];
-//	            }
-//	      
+//		mVolleyQueue = Volley.newRequestQueue(context); 
+//		String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=100&t=y1&p=1&utf8=1","wangfei");
+//		StringRequestEx stringRequest = new StringRequestEx(Request.Method.GET, url, new Response.Listener<String>() {
+//			@Override
+//			public void onResponse(String response) 
+//			{
+//				System.out.print(response);
+//				JSONObject dataJsonObject= formatSOSOReceivedData(response);
+//				//fillModel(strKeyword,dataJsonObject);
+//				try {
+//					fillModel(strKeyword, dataJsonObject);
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				}
+//		}, new Response.ErrorListener() {
+//			@Override
+//			public void onErrorResponse(VolleyError error) {
 //
-//	            
-//	            musicMessage.sourceUrlStr = sourceUrlStr;
-				
-				
-				int intlocation = Integer.parseInt(musicInfo.location);
-				String sourceUrlString="";
-				if (intlocation>=10) {
-					sourceUrlString = String.format("http://stream%s.qqmusic.qq.com/3%07d.mp3",musicInfo.location, Integer.parseInt(musicInfo.songId));
-				}
-				else {
-					sourceUrlString = String.format("http://stream1%s.qqmusic.qq.com/3%07d.mp3",musicInfo.location, Integer.parseInt(musicInfo.songId));					
-				}
-				
-				musicInfo.sourceUrlStr=sourceUrlString;
-			}
-            if (musicInfo.sourceUrlStr.isEmpty()) {
-				continue;
-			}
-     //       [musicinfomanager.searchMusicArray addObject:musicMessage];
-            musicmodelmanager.addMusicInfo(musicInfo);
-        }  
-
-        //发送广播消息
-	    
-        Intent intent = new Intent(CommonConst.ACTION_SEARCHMUSIC);
-//        intent.putExtra("position", position);
-        LocalBroadcastManager.getInstance(ListenToMusicApp.getListenToMusicApp()).sendBroadcast(intent);
+//				if( error instanceof NetworkError) {
+//					android.util.Log.w("1111", "222222");
+//				} 
+//				
+//				else if( error instanceof ServerError) {
+//				} else if( error instanceof AuthFailureError) {
+//				} else if( error instanceof ParseError) {
+//				} else if( error instanceof NoConnectionError) {
+//				} else if( error instanceof TimeoutError) {
+//				}
+//
+////				stopProgress();
+////				showToast(error.getMessage());
+//			}
+//		});
+//
+//		//To EXPERIMENT. Enable response caching to quickly fetch the response from cache, if set true.
+//		//Volley decides whether to cache the response or not, based on response headers obtained. Some of the parameters
+//		//to look for are Cache-control,maxAge, Expires.
+//		//
+//		//In case of weather api, the response headers has "Cache-Control: no-cache, must-revalidate" In this case, even if 
+//		//setShouldCache() api is set true, Volley decides not to store the response, because server has sent response headers as "must-revalidate"
+//		//So storing response doesn't make sense in this api. Some of these intelligences are implemented already in Volley, you need not take the burden of
+//		//parsing response headers.
+//		
+//		stringRequest.setShouldCache(true);
+////		stringRequest.setTag("MYTAG");	
+//		mVolleyQueue.add(stringRequest);
+//	}
+//	protected void fillModel(String keyString,JSONObject dataJsonObject) throws JSONException 
+//	{
+//		
+//		MusicModelManager musicmodelmanager=MusicModelManager.getInstance();
+//		if (!keyString.equals(musicmodelmanager.getMusicKeyString())) 
+//		{
+//			return;
+//		}
+//
+//		JSONArray songlist= dataJsonObject.getJSONArray("list");//获取JSONArray 
+//		
+//        int length = songlist.length();  
+//
+//        for(int i = 0; i < length; i++){//遍历JSONArray  
+////            Log.d("debugTest",Integer.toString(i));  
+//            JSONObject oj = songlist.getJSONObject(i);  
+//            String fString=oj.getString("f");
+//            FSMusicInfo musicInfo = new FSMusicInfo();
+//            String[] arr=fString.split("\\|");
+//            if( arr.length>10) 
+//            {
+//				musicInfo.songId=arr[0];
+//				musicInfo.title=arr[1];
+//				musicInfo.artist=arr[3];
+//				musicInfo.albumId=arr[4];
+//				musicInfo.album=arr[5];
+//				
+//				String durationString= arr[7];
+//				int intDuration=Integer.parseInt(durationString);
+//				musicInfo.duration=String.format("%02d:%02d",intDuration/60, intDuration%60);
+//				
+//				musicInfo.location=arr[8];
+//				int albumIdInt = Integer.parseInt(musicInfo.albumId);
+//				
+//				musicInfo.albumPictureUrlString=String.format("http://imgcache.qq.com/music/photo/album/%d/albumpic_%d_0.jpg",albumIdInt%100, albumIdInt);
+//				
+//					
+//				int intlocation = Integer.parseInt(musicInfo.location);
+//				String sourceUrlString="";
+//				if (intlocation>=10) {
+//					sourceUrlString = String.format("http://stream%s.qqmusic.qq.com/3%07d.mp3",musicInfo.location, Integer.parseInt(musicInfo.songId));
+//				}
+//				else {
+//					sourceUrlString = String.format("http://stream1%s.qqmusic.qq.com/3%07d.mp3",musicInfo.location, Integer.parseInt(musicInfo.songId));					
+//				}
+//				
+//				musicInfo.sourceUrlStr=sourceUrlString;
+//			}
+//            if (musicInfo.sourceUrlStr.isEmpty()) {
+//				continue;
+//			}
+//            musicmodelmanager.addMusicInfo(musicInfo);
+//        }  
+//
+//        //发送广播消息
+//	    
+//        Intent intent = new Intent(CommonConst.ACTION_SEARCHMUSIC);
+//
+//        LocalBroadcastManager.getInstance(ListenToMusicApp.getInstance()).sendBroadcast(intent);
 		
 	}
 	private JSONObject formatSOSOReceivedData(String aimString)  {		

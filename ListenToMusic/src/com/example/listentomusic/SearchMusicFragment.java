@@ -19,6 +19,9 @@ import com.example.listentomusic.model.FSMusicInfo;
 import com.example.listentomusic.model.MusicModelManager;
 import com.example.listentomusic.util.CommonConst;
 
+import com.teleca.jamendo.api.Playlist;
+import com.teleca.jamendo.api.PlaylistRemote;
+
 
 
 
@@ -48,6 +51,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -71,7 +76,7 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 	private IntentFilter intentFilter;
 	private SearchMusicAdapter searchmusicadapter=null;
 	
-	
+	private ListView lvSearchResult;
 	
 
 	
@@ -132,18 +137,71 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
         textViewSearchView.setGravity(Gravity.BOTTOM);
        
 
-        ListView listview=(ListView)v.findViewById(R.id.lvSearchMusicResult);
+        lvSearchResult=(ListView)v.findViewById(R.id.lvSearchMusicResult);
 //    	listview.setTextFilterEnabled(true) ;
 //		data = new ArrayList<String>() ;
 //		data.add("Hello"); data.add("Hebe") ; data.add("nick") ; data.add("ahha") ; data.add("jack") ; data.add("hello") ; data.add("welcome") ;
 //		data.add("Hello"); data.add("Hebe") ; data.add("nick") ; data.add("ahha") ; data.add("jack") ; data.add("hello") ; data.add("welcome") ;
 //		adapter = new ArrayAdapter<String>(getActivity(), R.layout.searchmusicitem, data);
-		listview.setAdapter(searchmusicadapter) ;
+        lvSearchResult.setAdapter(searchmusicadapter) ;
 		
 //		searchView.setOnClickListener()
 		searchView.setOnQueryTextListener(this);
-//		searchView.setSubmitButtonEnabled(true);
-	}
+		
+		lvSearchResult.setOnItemClickListener(new OnItemClickListener()
+		{
+			 
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View arg1, int position,
+                    long arg3) {
+            	
+            	
+            FSMusicInfo fsmusicinfo = (FSMusicInfo) adapterView.getItemAtPosition(position);
+            
+            
+            Playlist playlist=new Playlist(); 
+            playlist.addTracks(MusicModelManager.getInstance().getSearchFsMusicInfos());
+            
+            ListenToMusicApp.getInstance().getPlayerEngineInterface().openPlaylist(playlist);
+            ListenToMusicApp.getInstance().getPlayerEngineInterface().play();
+            
+            
+            
+//    			PlayerActivity.launch(SearchActivity.this, playlistRemote);
+                // TODO Auto-generated method stub
+//                if(list.get(arg2).equals("LinearLayout"))
+//                {
+//                    Intent intent = new Intent("com.wps.android.LINEARLAYOUT");
+//                    startActivity(intent);
+//                }
+//                if(list.get(arg2).equals("AbsoluteLayout"))
+//                {
+//                    Intent intent = new Intent("com.wps.android.ABSOLUTELAYOUT");
+//                    startActivity(intent);
+//                }
+//                if(list.get(arg2).equals("TableLayout"))
+//                {
+//                    Intent intent = new Intent("com.wps.android.TABLELAYOUT");
+//                    startActivity(intent);
+//                }
+//                if(list.get(arg2).equals("RelativeLayout"))
+//                {
+//                    Intent intent = new Intent("com.wps.android.RELATIVELAYOUT");
+//                    startActivity(intent);
+//                }
+//                if(list.get(arg2).equals("FrameLayout"))
+//                {
+//                    Intent intent = new Intent("com.wps.android.FRAMELAYOUT");
+//                    startActivity(intent);
+//                }
+            }
+             
+        });
+    }
+		
+	
+	
+	
 	
 	@Override
 	public void onStart()
@@ -224,6 +282,11 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 	    }
 	}
 	
+	
+	
+	
+	
+	
     public final class MusicItemViewHolder{  
         public ImageView songImg;  
         public TextView songTitleTextView;  
@@ -266,7 +329,7 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
-			return null;
+			return musicmodelmanager.getSearchFsMusicInfos().get(position);
 		}
 
 		@Override
@@ -299,9 +362,12 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
                
 
 
+            if (imageSourceUrlString!=null&&!imageSourceUrlString.isEmpty()) {
+                ImageListener listener = ImageLoader.getImageListener(holder.songImg, android.R.drawable.ic_menu_rotate, android.R.drawable.ic_delete);    
+                mImageLoader.get(imageSourceUrlString, listener);   
+			}
                
-            ImageListener listener = ImageLoader.getImageListener(holder.songImg, android.R.drawable.ic_menu_rotate, android.R.drawable.ic_delete);    
-            mImageLoader.get(imageSourceUrlString, listener);    
+ 
                
             holder.songTitleTextView.setText(fsmusicinfo.title);
             holder.songArtistTextView.setText(fsmusicinfo.artist);
@@ -310,5 +376,8 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
 		}
     	
     }
+    
+    
+    
     
 }
