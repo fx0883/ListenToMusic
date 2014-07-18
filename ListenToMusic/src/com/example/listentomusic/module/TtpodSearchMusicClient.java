@@ -1,5 +1,7 @@
 package com.example.listentomusic.module;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,8 +38,21 @@ public class TtpodSearchMusicClient extends BaseSearchClient {
 	{
 
 		mVolleyQueue = Volley.newRequestQueue(context); 
+		
+		String strKeyword2=strKeyword;
+		
+		
+		try {
+			//url = URLEncoder.encode(url,"UTF-8");
+			strKeyword2 = URLEncoder.encode(strKeyword,"UTF-8");
+//			url=URLDecoder.decode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		//String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1",strKeyword);
-		String url = String.format("http://so.ard.iyyin.com/v2/songs/search?q=%s&page=1&size=50",strKeyword);
+		String url = String.format("http://so.ard.iyyin.com/v2/songs/search?q=%s&page=1&size=50",strKeyword2);
 		StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) 
