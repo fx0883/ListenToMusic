@@ -366,6 +366,9 @@ public class SearchMusicFragment extends Fragment implements SearchView.OnQueryT
                 ImageListener listener = ImageLoader.getImageListener(holder.songImg, android.R.drawable.ic_menu_rotate, android.R.drawable.ic_delete);    
                 mImageLoader.get(imageSourceUrlString, listener);   
 			}
+            else {
+            	holder.songImg.setImageResource(R.drawable.tab_btn_fgtransfer);
+			}
                
  
                

@@ -37,7 +37,7 @@ public class TtpodSearchMusicClient extends BaseSearchClient {
 
 		mVolleyQueue = Volley.newRequestQueue(context); 
 		//String url = String.format("http://soso.music.qq.com/fcgi-bin/music_json.fcg?catZhida=1&lossless=1&json=1&w=%s&num=30&t=y1&p=1&utf8=1",strKeyword);
-		String url = String.format("http://so.ard.iyyin.com/v2/songs/search?q=%s&page=1&size=50","wangfei");
+		String url = String.format("http://so.ard.iyyin.com/v2/songs/search?q=%s&page=1&size=50",strKeyword);
 		StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) 

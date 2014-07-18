@@ -17,6 +17,8 @@
 package com.teleca.jamendo.media;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import com.example.listentomusic.ListenToMusicApp;
@@ -31,6 +33,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.audiofx.Equalizer;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
@@ -68,6 +71,8 @@ public class PlayerEngineImpl implements PlayerEngine {
 	 * 
 	 * @author Lukasz Wisniewski
 	 */
+	
+	private Map<String, String> cookieHeadMap=null;
 	private class InternalMediaPlayer extends MediaPlayer {
 
 		/**
@@ -139,6 +144,14 @@ public class PlayerEngineImpl implements PlayerEngine {
 		mLastFailTime = 0;
 		mTimesFailed = 0;
 		mHandler = new Handler();
+		loadData();
+	}
+	
+	//Modify by Fx
+	private void loadData()
+	{
+		cookieHeadMap =new HashMap<String, String>();
+		cookieHeadMap.put("Cookie", "qqmusic_fromtag=10; qqmusic_sosokey=4D96476733A6D833E90FEA9E590408D171B92452775E15FB");
 	}
 
 	@Override
@@ -314,7 +327,20 @@ public class PlayerEngineImpl implements PlayerEngine {
 		}
 		
 		try {
-			mediaPlayer.setDataSource(path);
+			if (path.contains(".qqmusic.qq.com")) {
+				Uri uri=Uri.parse(path);
+				mediaPlayer.setDataSource(ListenToMusicApp.getInstance(), uri, cookieHeadMap);
+			}
+			else {
+				
+//				Uri uri=Uri.parse(path);
+//				mediaPlayer.setDataSource(ListenToMusicApp.getInstance(), uri, cookieHeadMap);
+				mediaPlayer.setDataSource(path);
+			}
+			
+//			
+			
+			
 			mediaPlayer.playlistEntry = playlistEntry;
 			//mediaPlayer.setScreenOnWhilePlaying(true);
 
